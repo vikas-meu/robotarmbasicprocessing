@@ -1,0 +1,17 @@
+const int joyXPin = A0; // Analog pin connected to the X-axis of the joystick
+const int joyYPin = A1; // Analog pin connected to the Y-axis of the joystick
+
+void setup() {
+  Serial.begin(9600); // Initialize serial communication
+}
+
+void loop() {
+  int joyXValue = analogRead(joyXPin); // Read X-axis value from joystick
+  int joyYValue = analogRead(joyYPin); // Read Y-axis value from joystick
+
+  Serial.print(joyXValue);
+  Serial.print(",");
+  Serial.println(joyYValue);
+
+  delay(50); // Small delay for stability
+}
