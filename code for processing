@@ -1,0 +1,63 @@
+//##  created by vikas singh thakur from meu lab 
+// you can modify this code accordingly
+ 
+import processing.serial.*;
+
+Serial myPort; // Create a Serial object
+
+float angleX, angleY; // Variables to store the rotation angles for joint 1 and joint 2
+float armLength = 100; // Length of each arm segment
+float armWidth = 70; // Width of each arm segment
+float jointRadius = 10; // Radius of the joint
+
+void setup() {
+  size(600, 600);
+  frameRate(30); // Set the frame rate to 30 frames per second
+
+  // List all the available serial ports in the console
+  printArray(Serial.list());
+
+  // Replace "COM3" with the appropriate port name for your Arduino
+  String portName = "COM3";
+  myPort = new Serial(this, portName, 9600);
+}
+
+void draw() {
+  background(100);
+
+  if (myPort != null && myPort.available() > 0) {
+    String[] values = myPort.readStringUntil('\n').trim().split(",");
+    
+    if (values.length == 2) {
+      float joyXValue = float(values[0]); // Read X-axis value from Arduino
+      float joyYValue = float(values[1]); // Read Y-axis value from Arduino
+
+      println("JoyX: " + joyXValue + " JoyY: " + joyYValue);
+
+      // Map joystick values to rotation angles for joint 1 and joint 2
+      angleX = map(joyXValue, 900, 0, 0, PI); // Joint 1 rotation
+      angleY = map(joyYValue, 900,0, 0, PI); // Joint 2 rotation
+
+      println("AngleX: " + angleX + " AngleY: " + angleY);
+
+      // Draw robot arm with two joints
+      float jointX = width / 2;
+      float jointY = height / 2;
+
+      // Joint 1 rotation
+      float arm1EndX = jointX + cos(angleX) * armLength;
+      float arm1EndY = jointY + sin(angleX) * armLength;
+      line(jointX, jointY, arm1EndX, arm1EndY);
+
+      // Joint 2 rotation
+      float arm2EndX = arm1EndX + cos(angleX + angleY) * armLength;
+      float arm2EndY = arm1EndY + sin(angleX + angleY) * armLength;
+      line(arm1EndX, arm1EndY, arm2EndX, arm2EndY);
+
+      // Draw joints
+      ellipse(jointX, jointY, jointRadius * 2, jointRadius * 2);
+      ellipse(arm1EndX, arm1EndY, jointRadius * 2, jointRadius * 2);
+      ellipse(arm2EndX, arm2EndY, jointRadius * 2, jointRadius * 2);
+    }
+  }
+}
