@@ -1,6 +1,6 @@
 //##  created by vikas singh thakur from meu lab 
-// you can modify this code accordingly
- 
+// you can modify this code accordingly👍👍👍👍
+
 import processing.serial.*;
 
 Serial myPort; // Create a Serial object
@@ -40,21 +40,21 @@ void draw() {
 
       println("AngleX: " + angleX + " AngleY: " + angleY);
 
-      // Draw robot arm with two joints
+      // Draw robot arm with two joints (robot joint ko banane ke liye)
       float jointX = width / 2;
       float jointY = height / 2;
 
-      // Joint 1 rotation
+      // Joint 1 rotation (yaha joint 2 rotation ke liye add kr rhe)
       float arm1EndX = jointX + cos(angleX) * armLength;
       float arm1EndY = jointY + sin(angleX) * armLength;
       line(jointX, jointY, arm1EndX, arm1EndY);
 
-      // Joint 2 rotation
+      // Joint 2 rotation (yaha joint 2 add kr rhe)
       float arm2EndX = arm1EndX + cos(angleX + angleY) * armLength;
       float arm2EndY = arm1EndY + sin(angleX + angleY) * armLength;
       line(arm1EndX, arm1EndY, arm2EndX, arm2EndY);
 
-      // Draw joints
+      // Draw joints (yaha joints add kr rhe hai)
       ellipse(jointX, jointY, jointRadius * 2, jointRadius * 2);
       ellipse(arm1EndX, arm1EndY, jointRadius * 2, jointRadius * 2);
       ellipse(arm2EndX, arm2EndY, jointRadius * 2, jointRadius * 2);
